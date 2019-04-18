@@ -7,8 +7,8 @@
 
 using namespace std;
 
-static const int kItemRespositorySize = 10;
-static const int kItemProduce = 1000;
+static const int kItemRespositorySize = 100;
+static const int kItemProduce = 100000;
 
 struct ItemRepository {
 	int itemBuffer[kItemRespositorySize];
@@ -136,6 +136,7 @@ int main()
 	
 	try
 	{
+		auto start = chrono::system_clock::now();
 		iniReposity(&gItemRepository);
 
 		std::thread threadPro(produceTask);
@@ -157,8 +158,9 @@ int main()
 		threadCons2.join();
 		threadCons3.join();
 		threadCons4.join();
-
-
+		auto end = chrono::system_clock::now();
+		cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "milliseconds" << endl;
+		
 	}
 	catch (const exception&e)
 	{
